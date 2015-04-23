@@ -1,0 +1,35 @@
+			<div id="secondHeader" class="col-md-12" style="border-bottom:solid; border-top:solid; background:#A6CAFC;">
+  				<div class="row">
+  					<div class="col-md-9">
+  						<h2>My Dinner: {{getNumberOfGuests()}} people</h2>
+  					</div>
+			
+
+					<div class="col-md-3">
+						<a ng-href="http://localhost:8000/#/search"><button id='back' class='btn btn-default' type='submit' style='background:#428bca; border:solid;
+  					border-width:2px; margin-bottom:5px; margin-top:15px;'>
+						Go back and edit dinner
+						</button></a>
+					</div>
+				</div>
+
+			</div>
+			<div class="row" id="presentedMenu">
+ 
+  				<div class="col-md-12" style="margin-top:5%;">
+  					<div class='col-md-3'></div>
+
+  					<div ng-repeat="dish in dinner()">
+					<div class='col-md-2'>
+					<center><img ng-src="{{dish.ImageURL}}" width='150px' height='150px'><br/><h4>
+			  		{{dish.Title}}
+			  		</br>{{dishPrice(dish)*getNumberOfGuests()}} SEK</h4>
+
+			  		</center></div></div>
+
+					<div class='col-md-12'><center><h3>Total: {{total()*getNumberOfGuests()}} SEK</h3>
+					<a ng-href="http://localhost:8000/#/final"><button id='printing' class='btn btn-default' style='background:#428bca;'>
+					Print Full Recipe</button><a></center>
+					</div>
+  				</div>
+  			</div>
