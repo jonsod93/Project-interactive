@@ -3,9 +3,6 @@ var movieDatabaseApp = angular.module('movieDatabase', ['ngRoute','ngResource','
 movieDatabaseApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/home', {
-        templateUrl: 'partials/home.html'
-      }).
       when('/search', {
         templateUrl: 'partials/search.html',
         controller: 'SearchCtrl'
@@ -15,6 +12,6 @@ movieDatabaseApp.config(['$routeProvider',
         controller: 'MovieCtrl'
       }).
       otherwise({
-        redirectTo: '/home'
+        redirectTo: '/search'
       });
   }]);
