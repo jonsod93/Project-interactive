@@ -3,6 +3,7 @@ movieDatabaseApp.controller('SearchCtrl', function ($scope,Model) {
 	$scope.showPoplist = false;
 	$scope.showReclist = false;
 	$scope.searchDiv = false;
+
 	
 	$scope.showRec = function() {
 		$scope.showReclist = true;
@@ -34,13 +35,14 @@ movieDatabaseApp.controller('SearchCtrl', function ($scope,Model) {
 	}
 
    $scope.search = function(searched) {
-   $scope.status = "Searching...";
+   $scope.status = "SEARCHING...";
    Model.MovieSearch.get({query:searched},function(data){
      $scope.movies=data.results;
-     $scope.status = "Showing results";
+     $scope.status = "SHOWING RESULTS";
    },function(data){
-     $scope.status = "There was an error";
+     $scope.status = "THERE WAS AN ERROR";
    });
+
  }
 
  $scope.likeSearched = function(){
@@ -69,7 +71,6 @@ movieDatabaseApp.controller('SearchCtrl', function ($scope,Model) {
         if (list[i] != undefined && favourites[l] != undefined){
           if (list[i].id === favourites[l].id){
             list.splice(i,1);
-            console.log("HEJ2");
           }
       	}
         }

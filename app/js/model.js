@@ -15,7 +15,7 @@ movieDatabaseApp.factory('Model',function ($resource, $cookieStore) {
       var ID = favourites[j].id;
       this.recommended.get({id:ID},function(data){
         var rec = data.results;
-        for (var i=0;i<3;i++){
+        for (var i=0;i<5;i++){
           if (rec[i] != null){
             recList.push(rec[i]);
           }
@@ -56,8 +56,8 @@ movieDatabaseApp.factory('Model',function ($resource, $cookieStore) {
     }
 
     this.shorten = function(word){
-      if (word.length>21){
-        return word.substr(0,21)+"...";
+      if (word.length>28){
+        return word.substr(0,23)+"...";
       }
       else;
         return word;
@@ -84,7 +84,6 @@ movieDatabaseApp.factory('Model',function ($resource, $cookieStore) {
     IDs.push(favourites[u].id);
     }
     $cookieStore.put('favourites',IDs);
-    console.log($cookieStore.get('favourites'));
   }
 
    this.removeFromFavourites = function(movie) {

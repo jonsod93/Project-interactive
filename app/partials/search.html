@@ -1,19 +1,66 @@
 <style>
-#like:hover {color:#F2071B;}
-#unlike:hover {color:black;}
+h3{color:white;
+font-family: 'Bitter', serif;
+font-size:25px;
+margin-left:15px;}
+#heart {color:#F4A60F;
+font-size:25px;}
+#like:hover {color:#F4A60F;
+}
+#info:hover {color:#7A7A7A;
+}
+#unlike {color:#F4A60F;}
+#unlike:hover {color:#A8A8A8;}
+div.show-image {
+    position: relative;
+    float:left;
+    margin:5px;
+}
+div.show-image:hover img{
+    opacity:0.3;
+}
+div.show-image:hover span {
+    display: block;
+}
+div.show-image span {
+    position:absolute;
+    display:none;
+}
+div.show-image span.like {
+    top:65%;
+    left:39%;
+    font-size:60px;
+    color:#A8A8A8;
+}
+div.show-image span.info {
+    top:27%;
+    left:40%;
+    font-size:60px;
+    color:#A8A8A8;
+}
+div.show-image span.posterTitle {
+    top:0%;
+    left:15%;
+    font-size:17px;
+    color:#F4A60F;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+}
+::-webkit-scrollbar { 
+    display: none; 
+}
 </style>
 
 <div class="col-md-12">
-  				<div class="row" style="background:#DDDCF2;">
-  					<div class="col-md-12" style="background:#698397;"><h4>Search Movie or TVseries</h4>
-
+  				<div class="row" style="overflow-y:hidden; background-color:#272727;">
+  					<div class="col-md-12">
   					<div class="row" style="margin-top:2%; margin-bottom:2%;">
 
   						<div class="col-md-6">
 	    						<div class="input-group">
-	      							<input ng-model="query" id="search" type="text" class="form-control" placeholder="Enter title or genre etc">
+	      							<input ng-model="query" id="search" type="text" class="form-control" placeholder="Search for movie title">
 	      							<span class="input-group-btn">
-	        							<button ng-click="showSearched();search(query)" id="searchbutton" class="btn btn-default" type="button">Search</button>
+	        							<button ng-click="showSearched();search(query)" id="searchbutton" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> Search</button>
 	        							<button ng-click="showTop();topMovies();" id="topbutton" class="btn btn-default" type="button">Top rated movies</button>
 	        							<button ng-click="showPop();popMovies()" id="popbutton" class="btn btn-default" type="button">Popular right now</button>
 	        							<button ng-click="showRec();updateRec()" id="popbutton" class="btn btn-default" type="button">Recommendations</button>
@@ -23,86 +70,85 @@
 					</div>
   					</div>
 
-  					<div class="col-md-6" ng-show="showReclist" style="background-color:#DDDCF2; padding-bottom:25%;">
-  					<h3>Recommended for you</h3>
-  					<div class="row">
-						<div ng-repeat="rec in recommended()" class='col-md-12' style="height:10px; margin-top:3%;">
+  					<div class="col-md-6" ng-show="showReclist">
+  					<h3>RECOMMENDED FOR YOU</h3>
+  					<div class="row" style="overflow-y:auto; height:440px;">
+						<div ng-repeat="rec in recommended()" class='col-md-3' style="margin-left:-6px;">
 				  			
-				  			<div class="row">
 
-					  			<div class="col-md-6"><a ng-href="#/movie/{{rec.id}}" style="color:black;"><h3>{{shorten(rec.title)}}{{rec.name}}</h3></div></a>
-					  			<div class="col-md-4"><h3>Rating: {{rec.vote_average}}</h3></div></br>
-					  			<div class="col-md-2"><span class="glyphicon glyphicon-heart" id="like" ng-click= "addToFavourite(rec);updateRec()" aria-hidden="true"></span></div>
-				  			</div>
+				  				<div class="col-md-12 show-image" id="posters">
+					  			<img ng-src='http://image.tmdb.org/t/p/original{{rec.poster_path}}' onerror="this.src='/partials/images/noimage.png'"height="200px" width="150px">
+					  			<span class="like glyphicon glyphicon-heart" id="like" ng-click= "addToFavourite(rec);updateRec()" aria-hidden="true"/>
+					  			<a ng-href="#/movie/{{rec.id}}">
+					  			<span class="info glyphicon glyphicon-info-sign" id="info"/></a>
+					  			<span class="posterTitle">{{shorten(rec.title)}}</span>
+					  			</div>
 				  		</div>
 				  	</div>
   					</div>
 
-  					<div class="col-md-6" ng-show="showToplist" style="background-color:#DDDCF2; padding-bottom:25%;">
-  					<h3>Top Movies</h3>
-  					<div class="row">
-						<div ng-repeat="top in topList" class='col-md-12' style="height:10px; margin-top:3%;">
+  					<div class="col-md-6" ng-show="showToplist" >
+  					<h3>TOP MOVIES</h3>
+  					<div class="row" style="overflow-y:auto; height:440px;">
+						<div ng-repeat="top in topList" class='col-md-3' style="margin-left:-6px;">
 				  			
-				  			<div class="row">
-					  			<div class="col-md-6"><a ng-href="#/movie/{{top.id}}" style="color:black;"><h3>{{shorten(top.title)}}{{top.name}}<h3></div></a>
-					  			<div class="col-md-4"><h3>Rating: {{top.vote_average}}</h3></div></br>
-					  			<div class="col-md-2"><span class="glyphicon glyphicon-heart" id="like" ng-click= "addToFavourite(top);topMovies();updateRec()" aria-hidden="true"></span></div>
-				  			</div>
 				  			
-				  		<!--<img ng-src='http://image.tmdb.org/t/p/original{{movie.backdrop_path}}' height="100px" width="100px">-->
+					  			<div class="col-md-12 show-image" id="posters">
+					  			<img ng-src='http://image.tmdb.org/t/p/original{{top.poster_path}}' height="200px" width="150px">
+					  			<span class="like glyphicon glyphicon-heart" id="like" ng-click= "addToFavourite(top);topMovies();updateRec()" aria-hidden="true"/>
+					  			<a ng-href="#/movie/{{top.id}}">
+					  			<span class="info glyphicon glyphicon-info-sign" id="info"/></a>
+					  			<span class="posterTitle">{{shorten(top.title)}}</span>
+					  			</div>
+
 				  		</div>
 				  	</div>
   					</div>
 
-  					<div class="col-md-6" ng-show="showPoplist" style="background-color:#DDDCF2; padding-bottom:25%;">
-  					<h3>Popular right now</h3>
-  					<div class="row">
-						<div ng-repeat="pop in popList" class='col-md-12' style="height:10px; margin-top:3%;">
+  					<div class="col-md-6" ng-show="showPoplist">
+  					<h3>POPULAR RIGHT NOW</h3>
+  					<div class="row" style="overflow-y:auto; height:440px;">
+						<div ng-repeat="pop in popList" class='col-md-3' style="margin-left:-6px;">
 				  			
-				  			<div class="row">
+					  			<div class="col-md-12 show-image" id="posters">
+					  			<img ng-src='http://image.tmdb.org/t/p/original{{pop.poster_path}}' height="200px" width="150px">
+					  			<span class="like glyphicon glyphicon-heart" id="like" ng-click= "addToFavourite(pop);popMovies();updateRec()" aria-hidden="true"/>
+					  			<a ng-href="#/movie/{{pop.id}}">
+					  			<span class="info glyphicon glyphicon-info-sign" id="info"/></a>
+					  			<span class="posterTitle">{{shorten(pop.title)}}</span>
+					  			</div>
 
-					  			<div class="col-md-6"><a ng-href="#/movie/{{pop.id}}" style="color:black;"><h3>{{shorten(pop.title)}}{{pop.name}}</h3></div></a>
-					  			<div class="col-md-4"><h3>Rating: {{pop.vote_average}}</h3></div></br>
-					  			<div class="col-md-2"><span class="glyphicon glyphicon-heart" id="like" ng-click= "addToFavourite(pop);popMovies();updateRec()" aria-hidden="true"></span></div>
-				  			</div>
-				  			
-				  		<!--<img ng-src='http://image.tmdb.org/t/p/original{{movie.backdrop_path}}' height="100px" width="100px">-->
 				  		</div>
 				  	</div>
   					</div>
 
-  					<div class="col-md-6" ng-show="searchDiv" style="background-color:#DDDCF2; padding-bottom:5%;">
+  					<div class="col-md-6" ng-show="searchDiv">
   						<h3>{{status}}</h3>
-  						<div class="row">
-						<div ng-repeat="movie in movies" class='col-md-12' style="height:10px; margin-top:3%;">
+  						<div class="row" style="overflow-y:auto; height:440px;">
+						<div ng-repeat="movie in movies" class='col-md-3' style="margin-left:-6px;">
 				  			
-				  			<div class="row">
-					  			
-					  			<!-- <div class="col-md-2"><h3>{{movie.media_type}}</h3></div> -->
-					  			<div class="col-md-6"><a ng-href="#/movie/{{movie.id}}" style="color:black;"><h3>{{shorten(movie.title)}}{{movie.name}}<h3></a></div>
-					  			<div class="col-md-4"><h3>Rating: {{movie.vote_average}}</h3></div></br>
-					  			<div class="col-md-2"><span class="glyphicon glyphicon-heart" id="like" ng-click= "addToFavourite(movie);likeSearched();updateRec()" aria-hidden="true"></span></div>
-				  			</div>
-
-				  			
-				  		<!--<img ng-src='http://image.tmdb.org/t/p/original{{movie.backdrop_path}}' height="100px" width="100px">-->
+					  			<div class="col-md-12 show-image" id="posters">
+					  			<img ng-src='http://image.tmdb.org/t/p/original{{movie.poster_path}}' onerror="this.src='/partials/images/noimage.png'" height="200px" width="150px">
+					  			<span class="like glyphicon glyphicon-heart" id="like" ng-click= "addToFavourite(movie);likeSearched();updateRec()" aria-hidden="true"/>
+					  			<a ng-href="#/movie/{{movie.id}}">
+					  			<span class="info glyphicon glyphicon-info-sign" id="info"/>
+					  			<span class="posterTitle">{{shorten(movie.title)}}</span></a>
+					  			</div>
 				  		</div>
 				  		</div>
   					</div>
-  					<div class="col-md-6" style="background-color:#DDDCF2; padding-bottom:25%;">
-  					<h3>Favourites</h3>
-  					<div class="row">
-						<div ng-repeat="movie in favourites()" class='col-md-12' style="height:10px; margin-top:3%;">
+  					<div class="col-md-6">
+  					<h3>FAVOURITES <span class="like glyphicon glyphicon-heart" id="heart" aria-hidden="true"/></h3>
+  					<div class="row" style="overflow-y:auto; height:440px;">
+						<div ng-repeat="movie in favourites()" class='col-md-3' style="margin-left:-6px;">
 				  			
-				  			<div class="row">
-					  			
-					  			<!-- <div class="col-md-2"><h3>{{movie.media_type}}</h3></div> -->
-					  			<div class="col-md-6"><a ng-href="#/movie/{{movie.id}}" style="color:black;"><h3>{{shorten(movie.title)}}{{movie.name}}<h3></div></a>
-					  			<div class="col-md-4"><h3>Rating: {{movie.vote_average}}</h3></div></br>
-					  			<div class="col-md-2"><span class="glyphicon glyphicon-heart" style="color:#F2071B;" id="unlike" ng-click= "removeFromFavourites(movie);popMovies();topMovies();updateRec()" aria-hidden="true"></span></div>
-				  			</div>
-				  			
-				  		<!--<img ng-src='http://image.tmdb.org/t/p/original{{movie.backdrop_path}}' height="100px" width="100px">-->
+				  				<div class="col-md-12 show-image" id="posters">
+					  			<img ng-src='http://image.tmdb.org/t/p/original{{movie.poster_path}}' onerror="this.src='/partials/images/noimage.png'" height="200px" width="150px">
+					  			<span class="like glyphicon glyphicon-heart" id="unlike" ng-click= "removeFromFavourites(movie);popMovies();topMovies();updateRec()" aria-hidden="true"/>
+					  			<a ng-href="#/movie/{{movie.id}}">
+					  			<span class="info glyphicon glyphicon-info-sign" id="info"/></a>
+					  			<span class="posterTitle">{{shorten(movie.title)}}</span>
+					  			</div>
 				  		</div>
 				  		</div>
   					</div>
