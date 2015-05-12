@@ -58,8 +58,8 @@ div.show-image span.posterTitle {
 
   						<div class="col-md-6">
 	    						<div class="input-group">
-	      							<input ng-model="query" id="search" type="text" class="form-control" placeholder="Search for movie title">
 	      							<span class="input-group-btn">
+	      								<input ng-model="query" id="search" type="text" class="form-control" placeholder="Search for movie title" style="height:35px; width:35%;">
 	        							<button ng-click="showSearched();search(query)" id="searchbutton" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span> Search</button>
 	        							<button ng-click="showTop();topMovies();" id="topbutton" class="btn btn-default" type="button">Top rated movies</button>
 	        							<button ng-click="showPop();popMovies()" id="popbutton" class="btn btn-default" type="button">Popular right now</button>

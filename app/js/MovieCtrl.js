@@ -14,9 +14,11 @@ movieDatabaseApp.controller('MovieCtrl', function ($scope,$routeParams,Model) {
   $scope.loading();
 
   $scope.youtube =function(ending){
-    var urlen = 'https://www.youtube.com/embed/';
-    urlen += ending;
-    $("#youtube").attr("src", urlen);
+    if (ending != null | "" | undefined){
+      var urlen = 'https://www.youtube.com/embed/';
+      urlen += ending;
+      $("#youtube").attr("src", urlen);
+    }
   }
 
   $scope.addToFavourite = function(movie) {
